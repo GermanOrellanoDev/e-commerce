@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import router from "./routes/testRoutes";
 import productRoutes from "./routes/productRoutes";
+import orderRoutes from "./routes/orderRoutes";
 
 dotenv.config();
 
@@ -24,3 +25,4 @@ mongoose
 //rutas
 app.use("/api", router);
 app.use("/api/products", productRoutes);
+app.use("/api/orders", orderRoutes);
