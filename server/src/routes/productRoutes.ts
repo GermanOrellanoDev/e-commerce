@@ -6,13 +6,14 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/productController";
+import { authenticateJWT } from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post("/", createProduct);
+router.post("/", authenticateJWT, createProduct);
 router.get("/", getAllProducts);
 router.get("/:id", getProductById);
-router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.put("/:id", authenticateJWT, updateProduct);
+router.delete("/:id", authenticateJWT, deleteProduct);
 
 export default router;
