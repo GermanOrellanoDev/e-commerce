@@ -79,7 +79,7 @@ export const deleteOrder = async (
       res.status(404).json({ error: "Orden no encontrada" });
       return;
     }
-    res.json(deletedOrder);
+    res.json({ message: "Orden eliminada correctamente" });
   } catch (error) {
     next(error);
   }
