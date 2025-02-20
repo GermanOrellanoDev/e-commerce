@@ -1,3 +1,4 @@
+import { NextFunction, Request, Response } from "express";
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -15,16 +16,22 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
-mongoose
-  .connect(process.env.MONGO_URI as string)
-  .then(() => {
-    console.log("Mongo DB conectado");
-    app.listen(PORT, () => console.log(`Servidor corriendo ${PORT}`));
-  })
-  .catch((error) => console.error("Error conectando a MongoDB: ", error));
-
 //rutas
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+
+//middleware error
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log(err.stack);
+  res.status(500).json({ error: err.message });
+});
+
+mongoose
+  .connect(process.env.MONGO_URI as string)
+  .then(() => {
+    console.log("✅ Mongo DB conectado");
+    app.listen(PORT, () => console.log(`🚀 Servidor corriendo ${PORT}`));
+  })
+  .catch((error) => console.error("❌ Error conectando a MongoDB: ", error));
