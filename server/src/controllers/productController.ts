@@ -84,7 +84,7 @@ export const deleteProduct = async (
       res.status(404).json({ error: "Producto no encontrado" });
       return;
     }
-    res.json(deletedProduct);
+    res.json({ message: "Producto eliminado correctamente" });
   } catch (error) {
     next(error);
   }
