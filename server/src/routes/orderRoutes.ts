@@ -6,13 +6,14 @@ import {
   updateOrder,
   deleteOrder,
 } from "../controllers/orderController";
+import { authenticateJWT } from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post("/", createOrder);
-router.get("/", getAllOrders);
-router.get("/:id", getOrderById);
-router.put("/:id", updateOrder);
-router.delete("/:id", deleteOrder);
+router.post("/", authenticateJWT, createOrder);
+router.get("/", authenticateJWT, getAllOrders);
+router.get("/:id", authenticateJWT, getOrderById);
+router.put("/:id", authenticateJWT, updateOrder);
+router.delete("/:id", authenticateJWT, deleteOrder);
 
 export default router;

@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import router from "./routes/testRoutes";
+import authRoutes from "./routes/authRoutes";
 import productRoutes from "./routes/productRoutes";
 import orderRoutes from "./routes/orderRoutes";
 import userRoutes from "./routes/userRoutes";
@@ -24,7 +24,7 @@ mongoose
   .catch((error) => console.error("Error conectando a MongoDB: ", error));
 
 //rutas
-app.use("/api", router);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
