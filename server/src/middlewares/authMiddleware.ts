@@ -14,6 +14,8 @@ export const authenticateJWT = async (
 
   if (authHeader && authHeader.startsWith("Bearer ")) {
     const token = authHeader.split(" ")[1];
+    console.log("Authorization Header:", req.headers.authorization);
+    console.log("Token:", token);
 
     jwt.verify(token, process.env.JWT_SECRET as string, (err, user) => {
       if (err) {

@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import testRoutes from "./routes/testRoutes";
 import authRoutes from "./routes/authRoutes";
 import productRoutes from "./routes/productRoutes";
 import orderRoutes from "./routes/orderRoutes";
@@ -17,6 +18,7 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 //rutas
+app.use("/api", testRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/users", userRoutes);
