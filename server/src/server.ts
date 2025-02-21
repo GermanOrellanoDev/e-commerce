@@ -8,7 +8,6 @@ import authRoutes from "./routes/authRoutes";
 import productRoutes from "./routes/productRoutes";
 import orderRoutes from "./routes/orderRoutes";
 import userRoutes from "./routes/userRoutes";
-import swaggerUi from "swagger-ui-express";
 import { setupSwagger } from "./config/swagger";
 
 dotenv.config();
@@ -17,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 //rutas
 app.use("/api", testRoutes);
