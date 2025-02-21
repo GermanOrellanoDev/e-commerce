@@ -30,9 +30,13 @@ router.post(
   /* authenticateJWT, */
   createProduct
 );
+
 router.get("/", getAllProducts);
+
 router.get("/:id", getProductById);
+
 router.put("/:id", /* authenticateJWT, */ updateProduct);
+
 router.delete("/:id", /* authenticateJWT, */ deleteProduct);
 
 export default router;

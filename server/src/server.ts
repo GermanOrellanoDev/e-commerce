@@ -8,6 +8,8 @@ import authRoutes from "./routes/authRoutes";
 import productRoutes from "./routes/productRoutes";
 import orderRoutes from "./routes/orderRoutes";
 import userRoutes from "./routes/userRoutes";
+import swaggerUi from "swagger-ui-express";
+import { setupSwagger } from "./config/swagger";
 
 dotenv.config();
 
@@ -23,6 +25,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+
+setupSwagger(app);
 
 //middleware error
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

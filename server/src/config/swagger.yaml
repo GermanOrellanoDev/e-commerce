@@ -1,0 +1,389 @@
+openapi: 3.0.0
+info:
+  title: E-Commerce API
+  version: "1.0.0"
+  description: Documentación completa de la API para un e-commerce.
+servers:
+  - url: http://localhost:5000/api
+    description: Servidor local
+
+paths:
+  /auth/register:
+    post:
+      summary: Registrar un nuevo usuario
+      tags:
+        - Autenticación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201":
+          description: Usuario creado exitosamente.
+        "400":
+          description: Datos inválidos.
+
+  /auth/login:
+    post:
+      summary: Iniciar sesión
+      tags:
+        - Autenticación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Inicio de sesión exitoso.
+        "401":
+          description: Credenciales inválidas.
+
+  /products:
+    get:
+      summary: Obtener todos los productos
+      tags:
+        - Productos
+      responses:
+        "200":
+          description: Lista de productos.
+    post:
+      summary: Crear un nuevo producto
+      tags:
+        - Productos
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - price
+                - category
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                category:
+                  type: string
+                image:
+                  type: string
+                stock:
+                  type: number
+      responses:
+        "201":
+          description: Producto creado exitosamente.
+        "400":
+          description: Datos inválidos.
+
+  /products/{id}:
+    get:
+      summary: Obtener un producto por ID
+      tags:
+        - Productos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto encontrado.
+        "404":
+          description: Producto no encontrado.
+    put:
+      summary: Actualizar un producto
+      tags:
+        - Productos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                category:
+                  type: string
+                image:
+                  type: string
+                stock:
+                  type: number
+      responses:
+        "200":
+          description: Producto actualizado.
+        "404":
+          description: Producto no encontrado.
+    delete:
+      summary: Eliminar un producto
+      tags:
+        - Productos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado.
+        "404":
+          description: Producto no encontrado.
+
+  /orders:
+    get:
+      summary: Obtener todas las órdenes
+      tags:
+        - Órdenes
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Lista de órdenes.
+    post:
+      summary: Crear una nueva orden
+      tags:
+        - Órdenes
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - products
+              properties:
+                userId:
+                  type: string
+                products:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - productId
+                      - quantity
+                    properties:
+                      productId:
+                        type: string
+                      quantity:
+                        type: number
+      responses:
+        "201":
+          description: Orden creada exitosamente.
+        "400":
+          description: Datos inválidos.
+
+  /orders/{id}:
+    get:
+      summary: Obtener una orden por ID
+      tags:
+        - Órdenes
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Orden encontrada.
+        "404":
+          description: Orden no encontrada.
+    put:
+      summary: Actualizar una orden
+      tags:
+        - Órdenes
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+      responses:
+        "200":
+          description: Orden actualizada.
+        "404":
+          description: Orden no encontrada.
+    delete:
+      summary: Eliminar una orden
+      tags:
+        - Órdenes
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Orden eliminada.
+        "404":
+          description: Orden no encontrada.
+
+  /users:
+    get:
+      summary: Obtener todos los usuarios
+      tags:
+        - Usuarios
+      responses:
+        "200":
+          description: Lista de usuarios.
+    post:
+      summary: Registrar un nuevo usuario
+      tags:
+        - Usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201":
+          description: Usuario creado exitosamente.
+        "400":
+          description: Datos inválidos.
+
+  /users/{id}:
+    get:
+      summary: Obtener un usuario por ID
+      tags:
+        - Usuarios
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Usuario encontrado.
+        "404":
+          description: Usuario no encontrado.
+    put:
+      summary: Actualizar un usuario
+      tags:
+        - Usuarios
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Usuario actualizado.
+        "404":
+          description: Usuario no encontrado.
+    delete:
+      summary: Eliminar un usuario
+      tags:
+        - Usuarios
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Usuario eliminado.
+        "404":
+          description: Usuario no encontrado.
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -33,3 +33,9 @@ export const login = async (
     next(error);
   }
 };
+
+export const register = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {};
