@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import ProductsPage from "./pages/ProductsPage";
+import OrdersPage from "./pages/OrderPage";
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/products" />} />
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/orders" element={<OrdersPage />} />
       </Routes>
     </Router>
   );
