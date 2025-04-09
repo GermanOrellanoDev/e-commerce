@@ -1,7 +1,11 @@
-interface Props {}
+import Cart from "../components/common/Cart";
 
-const CartPage = (props: Props) => {
-  return <div>CartPage</div>;
+const CartPage = () => {
+  return (
+    <div className="bg-gray-200">
+      <Cart />
+    </div>
+  );
 };
 
 export default CartPage;

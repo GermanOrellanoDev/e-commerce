@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import ProductsPage from "./pages/ProductsPage";
 import OrdersPage from "./pages/OrderPage";
+import CartPage from "./pages/CartPage";
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/products" />} />
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/orders" element={<OrdersPage />} />
       </Routes>
     </Router>
