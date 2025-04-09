@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode, useEffect } from "react";
 import { ProductModel } from "../models/ProductModel";
 
 export interface CartProduct extends ProductModel {
@@ -14,18 +14,27 @@ interface CartContextType {
 export const CartContext = createContext<CartContextType | null>(null);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<CartProduct[]>([]);
+  const [cart, setCart] = useState<CartProduct[]>(() => {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (product: CartProduct) => {
     setCart((prevCart) => {
       const existingProduct = prevCart.find((p) => p._id === product._id);
+      let updatedCart;
       if (existingProduct) {
-        return prevCart.map((p) =>
+        updatedCart = prevCart.map((p) =>
           p._id === product._id ? { ...p, quantity: p.quantity + 1 } : p
         );
       } else {
-        return [...prevCart, { ...product, quantity: 1 }];
+        updatedCart = [...prevCart, { ...product, quantity: 1 }];
       }
+      return updatedCart;
     });
   };
 

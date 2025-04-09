@@ -12,7 +12,14 @@ const Product: React.FC<Props> = ({ product }: Props) => {
 
   const handleAddToCart = (product: ProductModel) => {
     const cartProduct: CartProduct = { ...product, quantity: 1 };
+    console.log("Producto agregado" + product.name);
     addToCart(cartProduct);
+  };
+
+  const handleRemoveToCart = (product: ProductModel) => {
+    const cartProductId: string = product._id;
+    console.log("Producto quitado" + product._id);
+    removeFromCart(cartProductId);
   };
 
   return (
@@ -34,7 +41,7 @@ const Product: React.FC<Props> = ({ product }: Props) => {
           Agregar
         </button>
         <button
-          onClick={() => removeFromCart(product._id)}
+          onClick={() => handleRemoveToCart(product)}
           className="flex items-center justify-center mt-3 w-full bg-red-400 text-white text-sm rounded-md py-1 hover:bg-red-600 transition-colors duration-300"
         >
           <BsBucket className="mr-1 text-lg" />
