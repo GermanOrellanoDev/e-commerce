@@ -15,14 +15,28 @@ export const createOrder = async (
   }
 };
 
+export const getUserOrders = async (
+  req: Request & { user?: { id: string } },
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const userId = req.user!.id;
+    const orders = await Order.find({ userId });
+    res.json(orders);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getAllOrders = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const orders = await Order.find();
-  res.json(orders);
   try {
+    const orders = await Order.find();
+    res.json(orders);
   } catch (error) {
     next(error);
   }

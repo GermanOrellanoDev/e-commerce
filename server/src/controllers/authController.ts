@@ -30,7 +30,13 @@ export const login = async (
       expiresIn: "1h",
     });
 
-    res.json({ token });
+    const {
+      password: _removedPassword,
+      verificationCode: _removedVerificationCode,
+      ...userToReturn
+    } = user.toObject();
+
+    res.json({ token, user: userToReturn });
   } catch (error) {
     next(error);
   }
