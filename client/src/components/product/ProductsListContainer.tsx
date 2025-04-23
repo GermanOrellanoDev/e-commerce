@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { getProducts } from "../../services/productService";
 import { ProductModel } from "../../models/ProductModel";
 import ProductsList from "./ProductsList";
@@ -6,6 +7,7 @@ import ProductsList from "./ProductsList";
 const ProductsListContainer: React.FC = () => {
   const [products, setProducts] = useState<ProductModel[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,9 +27,16 @@ const ProductsListContainer: React.FC = () => {
 
   return (
     <>
-      <h2 className="font-bold text-lg text-center">
-        Todos nuestros productos
-      </h2>
+      {user ? (
+        <h2 className="font-bold text-lg text-center">
+          {user?.user.name}, estos son nuestros productos
+        </h2>
+      ) : (
+        <h2 className="font-bold text-lg text-center">
+          ¡Hola! Estos son nuestros productos
+        </h2>
+      )}
+
       <div className="">
         <ProductsList products={products} />
       </div>

@@ -21,7 +21,7 @@ export const authenticateJWT = async (
       if (err) {
         return res.status(403).json({ message: "Acceso prohibido" });
       }
-      req.user = user;
+      req.user = user as { id: string; email: string };
       next();
     });
   } else {

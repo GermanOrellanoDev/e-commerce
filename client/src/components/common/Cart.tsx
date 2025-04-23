@@ -3,9 +3,11 @@ import { BsPlusLg, BsDashLg } from "react-icons/bs";
 import { CartProduct } from "../../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 import { createOrder } from "../../services/orderService";
+import { useAuth } from "../../hooks/useAuth";
 
 const Cart: React.FC = () => {
   const { cart, addToCart, removeFromCart } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const totalPrice = cart.reduce(
@@ -22,17 +24,23 @@ const Cart: React.FC = () => {
   };
 
   const handleBuy = async () => {
-    try {
-      const orderData = {
-        userId: "67b8c9d610ab955e90d4a872", //modificar
-        products: cart.map((item) => ({
-          productId: item._id,
-          quantity: item.quantity,
-          price: item.price,
-        })),
-        totalPrice,
-      };
+    if (!user || !user.user._id) {
+      console.log("Usuario no autenticado");
+      navigate("/login");
+      return;
+    }
 
+    const orderData = {
+      userId: user.user._id, //modificar
+      products: cart.map((item) => ({
+        productId: item._id,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+      totalPrice,
+    };
+
+    try {
       const order = await createOrder(orderData);
       navigate("/orders", { state: order });
     } catch (error) {
