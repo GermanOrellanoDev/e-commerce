@@ -18,3 +18,8 @@ export const getOrdersById = async (id: string) => {
   const response = await api.get(`/orders/${id}`);
   return response.data;
 };
+
+export const deleteOrder = async (id: string) => {
+  const response = await api.delete(`/orders/${id}`);
+  return response.data;
+};

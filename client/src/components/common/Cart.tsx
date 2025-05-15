@@ -50,11 +50,15 @@ const Cart: React.FC = () => {
 
   return (
     <div>
-      <h2 className="font-bold text-lg text-center">Tu carrito</h2>
-      <div className="rounded-lg bg-white overflow-hidden m-1 w-auto h-auto shadow-lg">
-        {cart.length === 0 ? (
-          <p>Tu carrito está vacío</p>
-        ) : (
+      <h2 className="font-bold text-lg text-white text-center">Tu carrito</h2>
+      {cart.length === 0 ? (
+        <div className="flex flex-col rounded-lg bg-white overflow-hidden m-8 w-2xs h-24 shadow-lg">
+          <h3 className="mt-1 font-bold text-sm text-center">
+            Tu carrito está vacío
+          </h3>
+        </div>
+      ) : (
+        <div className="rounded-lg bg-white overflow-hidden m-1 w-auto h-auto shadow-lg">
           <div className="flex flex-col items-center">
             <ul className="grid grid-cols-2">
               {cart.map((item) => (
@@ -99,8 +103,8 @@ const Cart: React.FC = () => {
               </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

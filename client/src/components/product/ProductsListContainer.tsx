@@ -23,16 +23,16 @@ const ProductsListContainer: React.FC = () => {
     fetchProducts();
   }, []);
 
-  if (loading) return <div>Cargando...</div>;
+  if (loading) return <div className="text-white">Cargando...</div>;
 
   return (
     <>
       {user ? (
-        <h2 className="font-bold text-lg text-center">
+        <h2 className="font-bold text-lg text-white text-center">
           {user?.user.name}, estos son nuestros productos
         </h2>
       ) : (
-        <h2 className="font-bold text-lg text-center">
+        <h2 className="font-bold text-lg text-white text-center">
           ¡Hola! Estos son nuestros productos
         </h2>
       )}

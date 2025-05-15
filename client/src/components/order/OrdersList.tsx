@@ -3,15 +3,14 @@ import Order from "./Order";
 
 interface Props {
   orders: OrderModel[];
+  onDelete: (id: string) => void;
 }
 
-const OrdersList: React.FC<Props> = ({ orders }: Props) => {
+const OrdersList: React.FC<Props> = ({ orders, onDelete }: Props) => {
   return (
-    <div className="grid grid-cols-2 m-2 w-auto">
+    <div className="flex flex-col m-2 w-auto">
       {orders.map((order) => (
-        <div key={order._id}>
-          <Order order={order} />
-        </div>
+        <Order key={order._id} order={order} onDelete={onDelete} />
       ))}
     </div>
   );
