@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RegisterData, registerUser } from "../../services/authService";
+import { toast } from "sonner";
 
 const Register: React.FC = () => {
   const [name, setName] = useState("");
@@ -18,17 +19,20 @@ const Register: React.FC = () => {
     try {
       const registerData: RegisterData = { name, lastname, email, password };
       const response = await registerUser(registerData);
-
       console.log(response);
       navigate("/verify");
+      toast.success("Usuario registrado");
     } catch (error) {
       setError("Error al registrar usuario");
+      toast.error("Error al registrar usuario");
     }
   };
 
   return (
     <div className="flex flex-col w-auto min-h-screen px-8">
-      <h2 className="font-bold text-lg text-center m-2">Registrate</h2>
+      <h2 className="font-bold text-lg text-white text-center m-2">
+        Registrate
+      </h2>
       {error && <p className="text-red-500">{error}</p>}
       <form
         onSubmit={handleSubmit}
@@ -37,21 +41,21 @@ const Register: React.FC = () => {
         <input
           type="text"
           placeholder="Nombre"
-          className="border p-2 rounded-md w-3xs"
+          className="border p-2 rounded-md bg-white w-3xs"
           onChange={(e) => setName(e.target.value)}
           required
         />
         <input
           type="text"
           placeholder="Apellido"
-          className="border p-2 rounded-md w-3xs"
+          className="border p-2 rounded-md bg-white w-3xs"
           onChange={(e) => setLastname(e.target.value)}
           required
         />
         <input
           type="email"
           placeholder="Email"
-          className="border p-2 rounded-md w-3xs"
+          className="border p-2 rounded-md bg-white w-3xs"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -59,7 +63,7 @@ const Register: React.FC = () => {
         <input
           type="password"
           placeholder="Contraseña"
-          className="border p-2 rounded-md w-3xs"
+          className="border p-2 rounded-md bg-white w-3xs"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
