@@ -14,15 +14,21 @@ import RegisterPage from "./pages/RegisterPage";
 import VerifyPage from "./pages/Verify";
 import Navbar from "./components/common/Navbar";
 import { Toaster } from "sonner";
+import { useProducts } from "./hooks/useProducts";
 
 const App: React.FC = () => {
+  const { products, loading, filterByName } = useProducts();
+
   return (
     <>
       <Router>
-        <Navbar />
+        <Navbar onSearch={filterByName} />
         <Routes>
-          <Route path="/" element={<Navigate to="/products" />} />
-          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/" element={<Navigate to="/products" replace />} />
+          <Route
+            path="/products"
+            element={<ProductsPage products={products} loading={loading} />}
+          />
           <Route path="/products/:id" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/orders" element={<OrdersPage />} />

@@ -2,11 +2,14 @@ import { Schema, model, Document } from "mongoose";
 
 export interface IOder extends Document {
   userId: Schema.Types.ObjectId;
-  product: {
-    productId: Schema.Types.ObjectId;
-    quantity: number;
-    price: number;
-  }[];
+  products: [
+    {
+      name: string;
+      productId: Schema.Types.ObjectId;
+      quantity: number;
+      price: number;
+    }
+  ];
   totalPrice: number;
   status: "pendiente" | "procesando" | "retirado" | "entregado" | "cancelado";
   createdAt: Date;
@@ -16,8 +19,9 @@ export interface IOder extends Document {
 const orderSchema = new Schema<IOder>(
   {
     userId: { type: Schema.Types.ObjectId, required: true },
-    product: [
+    products: [
       {
+        name: { type: String },
         productId: {
           type: Schema.Types.ObjectId,
           ref: "Product",

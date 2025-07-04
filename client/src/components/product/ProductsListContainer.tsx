@@ -1,27 +1,15 @@
-import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { getProducts } from "../../services/productService";
+
 import { ProductModel } from "../../models/ProductModel";
 import ProductsList from "./ProductsList";
 
-const ProductsListContainer: React.FC = () => {
-  const [products, setProducts] = useState<ProductModel[]>([]);
-  const [loading, setLoading] = useState<Boolean>(true);
-  const { user } = useAuth();
+interface Props {
+  products: ProductModel[];
+  loading: Boolean;
+}
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error al obtener los productos");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
+const ProductsListContainer: React.FC<Props> = ({ products, loading }) => {
+  const { user } = useAuth();
 
   if (loading) return <div className="text-white">Cargando...</div>;
 

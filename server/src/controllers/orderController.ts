@@ -7,7 +7,9 @@ export const createOrder = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const newOrder = new Order(req.body);
+    const { userId, products, totalPrice } = req.body;
+    console.log("Backend recibe:", req.body);
+    const newOrder = new Order({ userId, products, totalPrice });
     const createdOrder = await newOrder.save();
     res.status(201).json(createdOrder);
   } catch (error) {
