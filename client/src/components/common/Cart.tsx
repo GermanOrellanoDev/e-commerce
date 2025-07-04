@@ -33,6 +33,7 @@ const Cart: React.FC = () => {
     const orderData = {
       userId: user.user._id, //modificar
       products: cart.map((item) => ({
+        name: item.name,
         productId: item._id,
         quantity: item.quantity,
         price: item.price,
@@ -94,10 +95,10 @@ const Cart: React.FC = () => {
             <div className="m-1.5 font-bold">
               <p>Precio total: ${totalPrice.toFixed(2)}</p>
             </div>
-            <div className="p-1">
+            <div className="p-1 ">
               <button
                 onClick={handleBuy}
-                className="m-3 w-full bg-blue-400 text-white font-bold text-sm rounded-md py-1 hover:bg-blue-600 transition-colors duration-300"
+                className="m-3 w-auto bg-blue-400 text-white font-bold text-sm rounded-md p-1 hover:bg-blue-600 transition-colors duration-300"
               >
                 Comprar ahora
               </button>

@@ -2,7 +2,12 @@ import api from "./api";
 
 export const createOrder = async (orderData: {
   userId: string;
-  products: { productId: string; quantity: number; price: number }[];
+  products: {
+    name: string;
+    productId: string;
+    quantity: number;
+    price: number;
+  }[];
   totalPrice: number;
 }) => {
   const response = await api.post("/orders", orderData);
